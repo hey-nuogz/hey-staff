@@ -38,7 +38,7 @@ class StaffWock {
 		wock.add('staff-start', () => {
 			clearInterval(this.timer);
 
-			this.timer = setInterval(this.staff(this.hey.bind(this), this).bind(this), this.interval);
+			this.timer = setInterval(() => this.staff(this.hey.bind(this), this), this.interval);
 
 			this.staff(this.hey.bind(this), this);
 		});
