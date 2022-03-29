@@ -5,6 +5,9 @@ class StaffWock {
 	wock;
 
 	app;
+	id;
+
+	who;
 	token;
 
 	interval;
@@ -12,11 +15,14 @@ class StaffWock {
 	timer;
 
 
-	constructor(target, app, token, interval, staff) {
+	constructor(target, app, id, who, token, interval, staff) {
 		if(!~~interval || ~~interval < 1000) { throw Error('间隔无效或小于一秒'); }
 
 
 		this.app = app;
+		this.id = id;
+
+		this.who = who;
 		this.token = token;
 
 		this.interval = interval;
@@ -49,7 +55,7 @@ class StaffWock {
 
 	auth() {
 		if(this.token) {
-			this.wock.cast('hey/auth-staff', this.app, this.token);
+			this.wock.cast('hey/auth-staff', this.app, this.id, this.who, this.token);
 		}
 	}
 
