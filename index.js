@@ -51,12 +51,8 @@ class StaffWock {
 			this.auth();
 		});
 
-
-		wock.at('open', () => {
-			wock.reopen = this.auth.bind(this);
-
-			this.auth();
-		}, true);
+		wock.reopen = true;
+		wock.at('open', this.auth.bind(this));
 	}
 
 	auth() {
