@@ -15,7 +15,7 @@ class StaffWock {
 	timer;
 
 
-	constructor(target, app, id, who, token, interval, staff) {
+	constructor(target, app, id, who, token, interval, staff, logInfo, logError) {
 		if(!~~interval || ~~interval < 1000) { throw Error('间隔无效或小于一秒'); }
 
 
@@ -29,7 +29,10 @@ class StaffWock {
 		this.staff = staff;
 
 
-		const wock = this.wock = new Wock(new URL('wock', `http://${target.host}:${target.port}`).toString().replace(/^http/, 'ws'));
+		const wock = this.wock = new Wock(
+			new URL('wock', `http://${target.host}:${target.port}`).toString().replace(/^http/, 'ws'),
+			logInfo, logError
+		);
 
 
 		wock.add('start', () => {
