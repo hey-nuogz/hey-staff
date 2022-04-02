@@ -29,11 +29,24 @@ class StaffWock {
 		this.staff = staff;
 
 
-		const wock = this.wock = new Wock(
+		this.wock = new Wock(
 			new URL('wock', `http://${target.host}:${target.port}`).toString().replace(/^http/, 'ws'),
 			logInfo, logError
 		);
+	}
 
+	auth() {
+		if(this.token) {
+			this.wock.cast('hey/auth-staff', this.app, this.id, this.who, this.token);
+		}
+	}
+
+
+	hey(push) { return this.wock.cast('hey/push', push); }
+
+	add(...params) { return this.wock.add(...params); }
+	open(reason) {
+		const wock = this.wock;
 
 		wock.add('staff-start', () => {
 			clearInterval(this.timer);
@@ -51,21 +64,13 @@ class StaffWock {
 			this.auth();
 		});
 
+
 		wock.reopen = true;
 		wock.at('open', this.auth.bind(this));
+
+
+		return this.wock.open(reason);
 	}
-
-	auth() {
-		if(this.token) {
-			this.wock.cast('hey/auth-staff', this.app, this.id, this.who, this.token);
-		}
-	}
-
-
-	hey(push) { return this.wock.cast('hey/push', push); }
-
-	add(...params) { return this.wock.add(...params); }
-	open(reason) { return this.wock.open(reason); }
 }
 
 
